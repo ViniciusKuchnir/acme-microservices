@@ -5,6 +5,8 @@ import com.isep.acme.model.ProductDTO;
 import com.isep.acme.model.ProductDetailDTO;
 import com.isep.acme.repositories.ProductRepository;
 
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository repository;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     public Optional<Product> getProductBySku( final String sku ) {
@@ -71,7 +76,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO create(final Product product) {
         final Product p = new Product(product.getSku(), product.getDesignation(), product.getDescription());
+            //QueueName
+            String routingKey = "products.v1.product-created";
+            
+            ProductDetailDTO event = new ProductDetailDTO(product.getSku(), product.getDesignation(), product.getDescription());
 
+            rabbitTemplate.convertAndSend(routingKey, event);
         return repository.save(p).toDto();
     }
 

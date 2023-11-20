@@ -5,6 +5,8 @@ public class ProductDetailDTO {
     private String designation;
     private String description;
 
+    public ProductDetailDTO(){}
+
     public ProductDetailDTO(String sku, String designation, String description) {
         this.sku = sku;
         this.designation = designation;
