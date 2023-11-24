@@ -14,7 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.isep.acme.model.Product;
 import com.isep.acme.model.ProductDTO;
-
+import com.isep.acme.model.ProductRequest;
+import com.isep.acme.model.User;
 import com.isep.acme.services.ProductService;
 
 import java.util.Optional;
@@ -61,9 +62,9 @@ class ProductController {
     @Operation(summary = "creates a product")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ProductDTO> create(@RequestBody Product manager) {
+    public ResponseEntity<ProductDTO> create(@RequestBody Product manager, final User user) {
         try {
-            final ProductDTO product = service.create(manager);
+            final ProductDTO product = service.create(manager, user);
             return new ResponseEntity<ProductDTO>(product, HttpStatus.CREATED);
         }
         catch( Exception e ) {

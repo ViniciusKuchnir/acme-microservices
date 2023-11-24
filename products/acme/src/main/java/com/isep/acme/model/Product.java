@@ -20,29 +20,39 @@ public class Product {
 
     @Column(nullable = false)
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "created_by")
+    private User user;
+
+    @Column(name = "number_approvals")
+    private Integer numberApprovals = 0;
+
     /*
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Review> review = new ArrayList<Review>(); */
 
     protected Product(){}
 
-    public Product(final Long productID, final String sku) {
+    public Product(final Long productID, final String sku, final User user) {
         this.productID = Objects.requireNonNull(productID);
         setSku(sku);
+        this.user = user;
     }
 
-    public Product(final Long productID, final String sku, final String designation, final String description) {
-        this(productID, sku);
+    public Product(final Long productID, final String sku, final String designation, final String description, final User user) {
+        this(productID, sku, user);
         setDescription(description);
         setDesignation(designation);
     }
 
-    public Product(final String sku) {
+    public Product(final String sku, final User user) {
         setSku(sku);
+        this.user = user;
     }
 
-    public Product(final String sku, final String designation, final String description) {
-        this(sku);
+    public Product(final String sku, final String designation, final String description, final User user) {
+        this(sku, user);
         setDescription(description);
         setDesignation(designation);
     }

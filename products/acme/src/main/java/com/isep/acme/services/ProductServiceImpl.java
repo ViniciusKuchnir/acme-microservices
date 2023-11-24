@@ -3,7 +3,9 @@ package com.isep.acme.services;
 import com.isep.acme.model.Product;
 import com.isep.acme.model.ProductDTO;
 import com.isep.acme.model.ProductDetailDTO;
+import com.isep.acme.model.User;
 import com.isep.acme.repositories.ProductRepository;
+import com.isep.acme.repositories.UserRepository;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -22,6 +24,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private UserRepository userRepo;
 
     @Override
     public Optional<Product> getProductBySku( final String sku ) {
@@ -74,13 +79,15 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ProductDTO create(final Product product) {
-        final Product p = new Product(product.getSku(), product.getDesignation(), product.getDescription());
+    public ProductDTO create(final Product product, final User user) {
+
+            final Product p = new Product(product.getSku(), product.getDesignation(), product.getDescription(), user);
             //QueueName
             String routingKey = "products.v1.product-created";
             
             ProductDetailDTO event = new ProductDetailDTO(product.getSku(), product.getDesignation(), product.getDescription());
 
+            System.out.println("ENVIANDO MENSAGEM");
             rabbitTemplate.convertAndSend(routingKey, event);
         return repository.save(p).toDto();
     }
