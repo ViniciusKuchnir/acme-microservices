@@ -79,7 +79,10 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ProductDTO create(final Product product, final User user) {
+    public ProductDTO create(final Product product, final Long userId) {
+
+            Optional<User> userOptional = userRepo.findById(userId);
+            User user = userOptional.orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + userId)); 
 
             final Product p = new Product(product.getSku(), product.getDesignation(), product.getDescription(), user);
             //QueueName

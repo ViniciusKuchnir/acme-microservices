@@ -23,7 +23,7 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "created_by")
-    private User user;
+    private User createdBy;
 
     @Column(name = "number_approvals")
     private Integer numberApprovals = 0;
@@ -34,27 +34,11 @@ public class Product {
 
     protected Product(){}
 
-    public Product(final Long productID, final String sku, final User user) {
-        this.productID = Objects.requireNonNull(productID);
+    public Product(final String sku, final String designation, final String description, final User createdBy) {
         setSku(sku);
-        this.user = user;
-    }
-
-    public Product(final Long productID, final String sku, final String designation, final String description, final User user) {
-        this(productID, sku, user);
-        setDescription(description);
         setDesignation(designation);
-    }
-
-    public Product(final String sku, final User user) {
-        setSku(sku);
-        this.user = user;
-    }
-
-    public Product(final String sku, final String designation, final String description, final User user) {
-        this(sku, user);
         setDescription(description);
-        setDesignation(designation);
+        this.createdBy = createdBy;
     }
 
     public void setSku(String sku) {

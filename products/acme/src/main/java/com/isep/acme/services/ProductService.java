@@ -19,7 +19,7 @@ public interface ProductService {
 
     ProductDetailDTO getDetails(final String sku);
 
-    ProductDTO create(final Product manager, final User user);
+    ProductDTO create(final Product manager, final Long userId);
 
     ProductDTO updateBySku(final String sku, final Product product);
 

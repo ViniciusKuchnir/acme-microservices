@@ -60,11 +60,11 @@ class ProductController {
     }
 
     @Operation(summary = "creates a product")
-    @PostMapping
+    @PostMapping("/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ProductDTO> create(@RequestBody Product manager, final User user) {
+    public ResponseEntity<ProductDTO> create(@RequestBody Product manager, @PathVariable Long userId) {
         try {
-            final ProductDTO product = service.create(manager, user);
+            final ProductDTO product = service.create(manager, userId);
             return new ResponseEntity<ProductDTO>(product, HttpStatus.CREATED);
         }
         catch( Exception e ) {
