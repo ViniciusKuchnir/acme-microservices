@@ -90,9 +90,19 @@ public class ProductServiceImpl implements ProductService {
             
             ProductDetailDTO event = new ProductDetailDTO(product.getSku(), product.getDesignation(), product.getDescription());
 
-            System.out.println("ENVIANDO MENSAGEM");
             rabbitTemplate.convertAndSend(routingKey, event);
         return repository.save(p).toDto();
+    }
+
+    @Override
+    public void approveProduct(String sku, Long userId){
+        Optional<Product> product = repository.findBySku(sku);
+        Optional<User> user = userRepo.findById(userId);
+
+        if (user.get().getRole().getId() == 1 && product.get().getCreatedBy() != user.get()) {
+            product.get().setNumberApprovals(product.get().getNumberApprovals() + 1);
+            repository.save(product.get());
+        }
     }
 
     @Override

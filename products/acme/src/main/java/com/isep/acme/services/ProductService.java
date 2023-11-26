@@ -23,5 +23,7 @@ public interface ProductService {
 
     ProductDTO updateBySku(final String sku, final Product product);
 
+    void approveProduct(final String sku, final Long userId);
+
     void deleteBySku(final String sku);
 }

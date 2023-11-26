@@ -86,10 +86,22 @@ public class Product {
         return sku;
     }
 
+    public User getCreatedBy(){
+        return this.createdBy;
+    }
+
+    public Integer getNumberApprovals(){
+        return this.numberApprovals;
+    }
+
+    public void setNumberApprovals(Integer numberApprovals){
+        this.numberApprovals = numberApprovals;
+    }
 
     public void updateProduct(Product p) {
         setDesignation(p.designation);
         setDescription(p.description);
+
     }
 
     public Long getProductID() {

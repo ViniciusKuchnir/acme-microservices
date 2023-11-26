@@ -45,7 +45,6 @@ public class UserBootstrapper implements CommandLineRunner {
         if(userRepo.findByUsername("admin1@mail.com").isEmpty()) {
             User admin1 = new User("admin1@mail.com", encoder.encode("AdminPW1"),
                     "Jose Antonio", "355489123", "Rua Um", roleManager);
-            admin1.setRole(roleManager);
             admin1.addAuthority(new Role(Role.Admin));
             userRepo.save(admin1);
 
@@ -58,7 +57,6 @@ public class UserBootstrapper implements CommandLineRunner {
         if(userRepo.findByUsername("admin2@mail.com").isEmpty()) {
             User admin2 = new User("admin2@mail.com", encoder.encode("AdminPW2"),
                     "Vinícius Kuchnir", "111111111", "Rua Arquitetura de Software", roleManager);
-            admin2.setRole(roleManager);
             admin2.addAuthority(new Role(Role.Admin));
             userRepo.save(admin2);
 
@@ -67,6 +65,16 @@ public class UserBootstrapper implements CommandLineRunner {
                  pRepo.save(p2);
              }
         }
+
+        User admin3 = new User("admin3@mail.com", encoder.encode("AdminPW3"),
+                    "Vinícius Kuchnir", "444444444", "Rua Arquitetura de Software II", roleManager);
+            admin3.addAuthority(new Role(Role.Admin));
+            userRepo.save(admin3);
+
+        User user1 = new User("user1@mail.com", encoder.encode("UserPW1"),
+                    "Vinícius Kuchnir", "333333333", "Rua Arquitetura de Software", roleUserDefault);
+            user1.addAuthority(new Role(Role.Admin));
+            userRepo.save(user1);
 
         // if(userRepo.findByUsername("admin1@mail.com").isEmpty()) {
         //     User admin1 = new User("admin1@mail.com", encoder.encode("AdminPW1"),

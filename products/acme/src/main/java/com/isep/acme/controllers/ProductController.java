@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.isep.acme.model.Product;
+import com.isep.acme.model.ProductApprovals;
 import com.isep.acme.model.ProductDTO;
 import com.isep.acme.model.ProductRequest;
 import com.isep.acme.model.User;
@@ -71,6 +72,15 @@ class ProductController {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Product must have a unique SKU.");
         }
     }
+
+    @Operation(summary = "Approve a product")
+    @PostMapping("/approveProduct")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<Product> approveProduct(@RequestBody ProductApprovals request){
+            service.approveProduct(request.getSku(), request.getUserId());
+            return ResponseEntity.noContent().build();
+    }
+
 
     @Operation(summary = "updates a product")
     @PatchMapping(value = "/{sku}")
