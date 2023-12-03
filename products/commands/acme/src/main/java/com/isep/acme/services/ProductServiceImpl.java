@@ -33,13 +33,8 @@ public class ProductServiceImpl implements ProductService {
             User user = userOptional.orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + userId)); 
 
             final Product p = new Product(product.getSku(), product.getDesignation(), product.getDescription(), user);
-            //QueueName
-            String routingKey = "products.v1.product-created";
             
-            ProductDetailDTO event = new ProductDetailDTO(product.getSku(), product.getDesignation(), product.getDescription());
-
-            rabbitTemplate.convertAndSend(routingKey, event);
-        return repository.save(p).toDto();
+            return repository.save(p).toDto();
     }
 
     @Override
@@ -50,6 +45,15 @@ public class ProductServiceImpl implements ProductService {
         if (user.get().getRole().getId() == 1 && product.get().getCreatedBy() != user.get()) {
             product.get().setNumberApprovals(product.get().getNumberApprovals() + 1);
             repository.save(product.get());
+        }
+        
+        if (product.get().getNumberApprovals() == 2) {
+            //QueueName
+            String routingKey = "products.v1.product-created";
+            
+            ProductDetailDTO event = new ProductDetailDTO(product.get().getSku(), product.get().getDesignation(), product.get().getDescription());
+
+            rabbitTemplate.convertAndSend(routingKey, event);
         }
     }
 
