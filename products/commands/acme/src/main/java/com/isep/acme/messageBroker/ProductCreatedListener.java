@@ -11,7 +11,7 @@ public class ProductCreatedListener {
     
     @RabbitListener(queues = "products.v1.product-created")
     public void onProductCreated(ProductDetailDTO event){
-        System.out.println("ID receido " + event.getSku());
-        System.out.println("ID receido " + event.getDesignation());
+        System.out.println("ID recebido " + event.getSku());
+        System.out.println("ID recebido " + event.getDesignation());
     }
 }

@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-26T17:16:43+0000",
-    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.8.1 (Eclipse Adoptium)"
+    date = "2023-12-07T23:09:58+0000",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 19.0.2 (Amazon.com Inc.)"
 )
 @Component
 public class UserViewMapperImpl extends UserViewMapper {
@@ -19,11 +19,11 @@ public class UserViewMapperImpl extends UserViewMapper {
 
         UserView userView = new UserView();
 
-        userView.setFullName( user.getFullName() );
         if ( user.getUserId() != null ) {
             userView.setUserId( String.valueOf( user.getUserId() ) );
         }
         userView.setUsername( user.getUsername() );
+        userView.setFullName( user.getFullName() );
 
         return userView;
     }
