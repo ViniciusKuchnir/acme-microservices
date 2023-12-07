@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
         
         final Optional<Product> productToUpdate = repository.findBySku(sku);
 
-        if( productToUpdate.isEmpty() ) return null;
+        if( productToUpdate.isEmpty()) return null;
 
         productToUpdate.get().updateProduct(product);
 
