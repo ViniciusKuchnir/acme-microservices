@@ -1,6 +1,8 @@
 package com.isep.acme.Authentication;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,6 +46,12 @@ public class AuthenticationApi {
     @Autowired
     private UserViewMapper userViewMapper;
 
+    @Autowired
+    private RabbitTemplate template;
+
+    @Autowired
+    private Queue queue;
+
     @PostMapping("login")
     public ResponseEntity<UserView> login(@RequestBody @Valid final AuthenticationRequest request) {
         try {
@@ -63,6 +71,8 @@ public class AuthenticationApi {
                     .claim("roles", scope).build();
 
             final String token = this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+
+            this.template.convertAndSend(queue.getName(), "message");
 
             return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, token).body(userViewMapper.toUserView(user));
         } catch (final BadCredentialsException ex) {

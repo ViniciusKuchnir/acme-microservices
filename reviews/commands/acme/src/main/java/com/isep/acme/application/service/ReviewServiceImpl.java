@@ -191,8 +191,6 @@ public class ReviewServiceImpl implements ReviewService {
 
         Review review = repository.save(r.get());
 
-        this.template.convertAndSend(queue.getName(), "message");
-
         return ReviewMapper.toDto(review);
     }
 
