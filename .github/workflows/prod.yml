@@ -19,16 +19,16 @@ jobs:
             
             - name: Enter the microservice folder
               run: cd products/commands/acme
-            - name: List directory contents
-              run: ls -R
 
             - name: Build project
-              run: mvn clean install -DskipTests
+              run: mvn clean install
             
             - name: Login Docker Hub
               run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+
             - name: Build docker image
               run: docker build -t viniciuskuchnir20/acme_products_commands .
+              
             - name: Push image docker
               run: docker push viniciuskuchnir20/acme_products_commands
                 
