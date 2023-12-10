@@ -19,6 +19,9 @@ jobs:
             
             - name: Enter the microservice folder
               run: cd products/commands/acme
+            - name: List directory contents
+              run: ls -R
+
             - name: Build project
               run: mvn clean install -DskipTests
             
