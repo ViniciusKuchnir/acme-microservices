@@ -17,6 +17,13 @@ jobs:
                 distribution: 'temurin'
                 java-version: '17'
             
+            - name: Enter the microservice folder
+              run: cd products/commands/acme
+
+            - name: Build project
+              working-directory: ./products/commands/acme
+              run: mvn clean install
+            
             - name: Login Docker Hub
               run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
 
@@ -25,13 +32,6 @@ jobs:
               
             - name: Push image docker
               run: docker push viniciuskuchnir20/acme_products_commands
-
-            - name: Enter the microservice folder
-              run: cd products/commands/acme
-
-            - name: Build project
-              working-directory: ./products/commands/acme
-              run: mvn clean install
                 
               
               
