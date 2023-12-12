@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.isep.acme.model.Product;
-import com.isep.acme.model.ProductApprovals;
 import com.isep.acme.model.ProductDTO;
 import com.isep.acme.model.ProductRequest;
 import com.isep.acme.model.User;
