@@ -21,24 +21,16 @@ public class Product {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "created_by")
-    private User createdBy;
-
-    @Column(name = "number_approvals")
-    private Integer numberApprovals = 0;
-
     /*
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Review> review = new ArrayList<Review>(); */
 
     protected Product(){}
 
-    public Product(final String sku, final String designation, final String description, final User createdBy) {
+    public Product(final String sku, final String designation, final String description) {
         setSku(sku);
         setDesignation(designation);
         setDescription(description);
-        this.createdBy = createdBy;
     }
 
     public void setSku(String sku) {
@@ -86,17 +78,6 @@ public class Product {
         return sku;
     }
 
-    public User getCreatedBy(){
-        return this.createdBy;
-    }
-
-    public Integer getNumberApprovals(){
-        return this.numberApprovals;
-    }
-
-    public void setNumberApprovals(Integer numberApprovals){
-        this.numberApprovals = numberApprovals;
-    }
 
     public void updateProduct(Product p) {
         setDesignation(p.designation);
