@@ -28,11 +28,18 @@ public class Review {
     @Column(nullable = true)
     private List<Vote> downVote;
 
+    @ElementCollection
+    @Column(nullable = true)
+    private  List<Vote> acceptance;
+
     @Column(nullable = true)
     private String report;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate publishingDate;
+
+    @Column(nullable = false)
+    private LocalDate creationDate;
 
     @Column(nullable = false)
     private String funFact;
@@ -50,16 +57,21 @@ public class Review {
 
     protected Review(){}
 
-    public Review(final Long idReview, final long version, final String approvalStatus, final String reviewText, final LocalDate publishingDate, final String funFact) {
+    public Review(final Long idReview, final long version, final String approvalStatus,
+                  final String reviewText, final LocalDate creationDate, final String funFact) {
         this.idReview = Objects.requireNonNull(idReview);
         this.version = Objects.requireNonNull(version);
         setApprovalStatus(approvalStatus);
         setReviewText(reviewText);
-        setPublishingDate(publishingDate);
+        setCreationDate(creationDate);
         setFunFact(funFact);
     }
 
-    public Review(final Long idReview, final long version, final String approvalStatus, final  String reviewText, final List<Vote> upVote, final List<Vote> downVote, final String report, final LocalDate publishingDate, final String funFact, Product product, Rating rating, User user) {
+    public Review(final Long idReview, final long version, final String approvalStatus,
+                  final  String reviewText, final List<Vote> upVote, final List<Vote> downVote,
+                  final String report, final LocalDate publishingDate, final String funFact,
+                  Product product, Rating rating, User user) {
+
         this(idReview, version, approvalStatus, reviewText, publishingDate, funFact);
 
         setUpVote(upVote);
@@ -71,14 +83,16 @@ public class Review {
 
     }
 
-    public Review(final String reviewText, LocalDate publishingDate, Product product, String funFact, Rating rating, User user) {
+    public Review(final String reviewText, LocalDate creationDate, Product product,
+                  String funFact, Rating rating, User user) {
         setReviewText(reviewText);
         setProduct(product);
-        setPublishingDate(publishingDate);
+        setCreationDate(creationDate);
         setApprovalStatus("pending");
         setFunFact(funFact);
         setRating(rating);
         setUser(user);
+        this.acceptance = new ArrayList<>();
         this.upVote = new ArrayList<>();
         this.downVote = new ArrayList<>();
     }
@@ -94,9 +108,9 @@ public class Review {
     public Boolean setApprovalStatus(String approvalStatus) {
 
         if( approvalStatus.equalsIgnoreCase("pending") ||
-            approvalStatus.equalsIgnoreCase("approved") ||
-            approvalStatus.equalsIgnoreCase("rejected")) {
-            
+                approvalStatus.equalsIgnoreCase("approved") ||
+                approvalStatus.equalsIgnoreCase("rejected")) {
+
             this.approvalStatus = approvalStatus;
             return true;
         }
@@ -131,6 +145,14 @@ public class Review {
 
     public void setPublishingDate(LocalDate publishingDate) {
         this.publishingDate = publishingDate;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
 
     public long getVersion() {
@@ -178,6 +200,13 @@ public class Review {
 
     public void setUpVote(List<Vote> upVote) {
         this.upVote = upVote;
+    }
+    public List<Vote> getAcceptance() {
+        return acceptance;
+    }
+
+    public void setAcceptance(List<Vote> acceptance) {
+        this.acceptance = acceptance;
     }
 
     public List<Vote> getDownVote() {

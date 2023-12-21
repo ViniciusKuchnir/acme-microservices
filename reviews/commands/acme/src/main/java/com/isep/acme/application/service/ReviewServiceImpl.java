@@ -175,7 +175,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDTO moderateReview(Long reviewID, String approved) throws ResourceNotFoundException, IllegalArgumentException {
+    public ReviewDTO moderateReview(Long reviewID, VoteReviewDTO voteReviewDTO) throws ResourceNotFoundException, IllegalArgumentException {
 
         Optional<Review> r = repository.findById(reviewID);
 
@@ -183,17 +183,39 @@ public class ReviewServiceImpl implements ReviewService {
             throw new ResourceNotFoundException("Review not found");
         }
 
-        Boolean ap = r.get().setApprovalStatus(approved);
+        var lista = r.get().getAcceptance();
+
+        lista.add(new Vote("accepted",voteReviewDTO.getUserID()));
+
+        r.get().setAcceptance(lista);
+
+        Review review = repository.save(r.get());
+
+        if(lista.size() == 2){
+            this.template.convertAndSend(queue.getName(), review.getIdReview());
+        }
+
+        return ReviewMapper.toDto(review);
+    }
+
+
+    @Override
+    public void acceptReview(Long reviewID) throws ResourceNotFoundException, IllegalArgumentException {
+
+        Optional<Review> r = repository.findById(reviewID);
+
+        if(r.isEmpty()){
+            throw new ResourceNotFoundException("Review not found");
+        }
+
+        Boolean ap = r.get().setApprovalStatus("approved");
 
         if(!ap) {
             throw new IllegalArgumentException("Invalid status value");
         }
 
-        Review review = repository.save(r.get());
-
-        return ReviewMapper.toDto(review);
+        repository.save(r.get());
     }
-
 
     @Override
     public List<ReviewDTO> findReviewsByUser(Long userID) {

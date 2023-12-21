@@ -3,6 +3,7 @@ package com.isep.acme.model;
 import com.isep.acme.application.dto.ProductDTO;
 
 import javax.persistence.*;
+import java.util.Random;
 
 @Entity
 public class Product {
@@ -34,6 +35,13 @@ public class Product {
     private List<Review> review = new ArrayList<Review>(); */
 
     protected Product(){}
+
+    public Product(String sku,String designation, String description){
+        this.productID = Math.abs(new Random().nextLong());
+        this.sku = sku;
+        this.designation = designation;
+        this.description = description;
+    }
 
     public Product(final String sku, final String designation, final String description, final User createdBy) {
         setSku(sku);

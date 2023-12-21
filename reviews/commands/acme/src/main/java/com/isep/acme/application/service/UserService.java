@@ -31,10 +31,12 @@ public class UserService implements UserDetailsService {
     }
 
     public UserView getUser(final Long userId){
-        return userViewMapper.toUserView(userRepo.getById(userId));
+        var user = userRepo.getById(userId);
+        return userViewMapper.toUserView(user);
     }
 
     public Optional<User> getUserId(Long user) {
-        return userRepo.findById(user);
+        var userModel = userRepo.getById(user);
+        return Optional.of(userModel);
     }
 }

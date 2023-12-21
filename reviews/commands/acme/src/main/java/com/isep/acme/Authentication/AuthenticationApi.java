@@ -46,11 +46,6 @@ public class AuthenticationApi {
     @Autowired
     private UserViewMapper userViewMapper;
 
-    @Autowired
-    private RabbitTemplate template;
-
-    @Autowired
-    private Queue queue;
 
     @PostMapping("login")
     public ResponseEntity<UserView> login(@RequestBody @Valid final AuthenticationRequest request) {
@@ -71,8 +66,6 @@ public class AuthenticationApi {
                     .claim("roles", scope).build();
 
             final String token = this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-
-            this.template.convertAndSend(queue.getName(), "message");
 
             return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, token).body(userViewMapper.toUserView(user));
         } catch (final BadCredentialsException ex) {

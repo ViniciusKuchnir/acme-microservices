@@ -1,5 +1,7 @@
 package com.isep.acme;
 
+import com.isep.acme.messageBroker.ReviewMBListener;
+import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -25,4 +27,5 @@ public class ACMEApplication {
 	public HttpMessageConverter<BufferedImage> createImageHttpMessageConverter() {
 		return new BufferedImageHttpMessageConverter();
 	}
+
 }

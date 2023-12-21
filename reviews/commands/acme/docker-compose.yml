@@ -13,11 +13,11 @@ services:
       - RABBITMQ_DEFAULT_USER=rabbitmq
       - RABBITMQ_DEFAULT_PASS=rabbitmq
 
-  acme_reviews:
+  acme_reviews_commands:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: acme_reviews
+    container_name: acme_reviews_commands
     environment:
       - SPRING_RABBITMQ_HOST=acme_rabbitmq
     ports:
