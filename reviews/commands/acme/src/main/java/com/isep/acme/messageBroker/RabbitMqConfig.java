@@ -25,6 +25,11 @@ public class RabbitMqConfig {
     }
 
     @Bean
+    public ProductListener plistener(){
+        return new ProductListener();
+    }
+
+    @Bean
     public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory){
         return new RabbitAdmin(connectionFactory);
     }

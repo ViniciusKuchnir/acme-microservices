@@ -1,8 +1,8 @@
 package com.isep.acme.application.service;
 
-import com.isep.acme.application.dto.CreateReviewDTO;
-import com.isep.acme.application.dto.ReviewDTO;
-import com.isep.acme.application.dto.VoteReviewDTO;
+import com.isep.acme.application.dto.reviews.CreateReviewDTO;
+import com.isep.acme.application.dto.reviews.ReviewDTO;
+import com.isep.acme.application.dto.reviews.VoteReviewDTO;
 import com.isep.acme.application.interfaces.service.RatingService;
 import com.isep.acme.application.interfaces.service.ReviewService;
 import com.isep.acme.application.mapper.ReviewMapper;

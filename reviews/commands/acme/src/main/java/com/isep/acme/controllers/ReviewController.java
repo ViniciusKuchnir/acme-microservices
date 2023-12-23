@@ -1,8 +1,8 @@
 package com.isep.acme.controllers;
 
-import com.isep.acme.application.dto.CreateReviewDTO;
-import com.isep.acme.application.dto.ReviewDTO;
-import com.isep.acme.application.dto.VoteReviewDTO;
+import com.isep.acme.application.dto.reviews.CreateReviewDTO;
+import com.isep.acme.application.dto.reviews.ReviewDTO;
+import com.isep.acme.application.dto.reviews.VoteReviewDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.isep.acme.application.interfaces.service.ReviewService;
-
-import java.util.List;
 
 
 @Tag(name = "Review", description = "Endpoints for managing Review")

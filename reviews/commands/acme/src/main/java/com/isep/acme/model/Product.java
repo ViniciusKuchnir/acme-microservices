@@ -1,6 +1,6 @@
 package com.isep.acme.model;
 
-import com.isep.acme.application.dto.ProductDTO;
+import com.isep.acme.application.dto.products.ProductDTO;
 
 import javax.persistence.*;
 import java.util.Random;
@@ -23,7 +23,7 @@ public class Product {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "created_by")
     private User createdBy;
 

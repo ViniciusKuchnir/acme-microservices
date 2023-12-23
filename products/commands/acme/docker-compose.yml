@@ -22,6 +22,6 @@ services:
     environment:
       - SPRING_RABBITMQ_HOST=acme_rabbitmq
     ports:
-      - "8080:8080"
+      - "8079:8079"
     depends_on:
       - acme_rabbitmq

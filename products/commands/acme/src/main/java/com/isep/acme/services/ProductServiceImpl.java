@@ -27,12 +27,9 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ProductDTO create(final Product product, final Long userId) {
+    public ProductDTO create(final ProductDTO product) {
 
-            Optional<User> userOptional = userRepo.findById(userId);
-            User user = userOptional.orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + userId)); 
-
-            final Product p = new Product(product.getSku(), product.getDesignation(), product.getDescription(), user);
+            final Product p = new Product(product.getSku(), product.getDesignation(), product.getDescription());
             
             return repository.save(p).toDto();
     }
@@ -40,21 +37,21 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void approveProduct(String sku, Long userId){
         Optional<Product> product = repository.findBySku(sku);
-        Optional<User> user = userRepo.findById(userId);
+        //Optional<User> user = userRepo.findById(userId);
 
-        if (user.get().getRole().getId() == 1 && product.get().getCreatedBy() != user.get()) {
+        /*/if (user.get().getRole().getId() == 1 && product.get().getCreatedBy() != user.get()) {
             product.get().setNumberApprovals(product.get().getNumberApprovals() + 1);
             repository.save(product.get());
         }
         
-        if (product.get().getNumberApprovals() == 2) {
+        if (product.get().getNumberApprovals() == 2) {*/
             //QueueName
             String routingKey = "products.v1.product-created";
             
             ProductDetailDTO event = new ProductDetailDTO(product.get().getSku(), product.get().getDesignation(), product.get().getDescription());
 
             rabbitTemplate.convertAndSend(routingKey, event);
-        }
+       // }
     }
 
     @Override

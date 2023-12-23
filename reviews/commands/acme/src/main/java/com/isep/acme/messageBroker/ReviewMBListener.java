@@ -14,7 +14,6 @@ public class ReviewMBListener {
 
     @RabbitHandler
     public void reviewAccepted(Long reviewId){
-        //System.out.println(reviewId);
         reviewService.acceptReview(reviewId);
     }
 }

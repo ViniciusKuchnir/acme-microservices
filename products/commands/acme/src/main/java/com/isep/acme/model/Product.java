@@ -5,9 +5,6 @@ import java.util.Objects;
 
 @Entity
 public class Product {
-
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long productID;
@@ -21,7 +18,7 @@ public class Product {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "created_by")
     private User createdBy;
 
@@ -39,6 +36,12 @@ public class Product {
         setDesignation(designation);
         setDescription(description);
         this.createdBy = createdBy;
+    }
+
+    public Product(String sku, String designation, String description) {
+        this.sku = sku;
+        this.designation = designation;
+        this.description = description;
     }
 
     public void setSku(String sku) {
