@@ -5,6 +5,6 @@ import com.isep.acme.model.Product;
 import com.isep.acme.model.ProductDetailDTO;
 
 public interface ProductService {
-    ProductDTO create(final ProductDetailDTO manager);
+    void create(final ProductDetailDTO manager);
 
 }

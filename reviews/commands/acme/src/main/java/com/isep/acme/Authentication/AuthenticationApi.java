@@ -36,7 +36,6 @@ import static java.util.stream.Collectors.joining;
 @RequestMapping(path = "auth/public")
 public class AuthenticationApi {
 
-
     @Autowired
     private AuthenticationManager authenticationManager;
 

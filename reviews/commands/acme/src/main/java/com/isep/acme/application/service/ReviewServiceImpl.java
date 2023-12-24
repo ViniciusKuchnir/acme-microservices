@@ -9,6 +9,7 @@ import com.isep.acme.application.mapper.ReviewMapper;
 import com.isep.acme.controllers.ResourceNotFoundException;
 import java.lang.IllegalArgumentException;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,12 +54,13 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Iterable<Review> getAll() {
-        return repository.findAll();
+        //return repository.findAll();
+        throw new NotImplementedException();
     }
 
     @Override
     public ReviewDTO create(final CreateReviewDTO createReviewDTO, String sku) {
-
+/*
         final Optional<Product> product = pRepository.findBySku(sku);
 
         if(product.isEmpty()) return null;
@@ -85,7 +87,8 @@ public class ReviewServiceImpl implements ReviewService {
 
         if (review == null) return null;
 
-        return ReviewMapper.toDto(review);
+        return ReviewMapper.toDto(review);*/
+        throw new NotImplementedException();
     }
 
     @Override
@@ -103,7 +106,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public boolean addVoteToReview(Long reviewID, VoteReviewDTO voteReviewDTO) {
-
+/*
         Optional<Review> review = this.repository.findById(reviewID);
 
         if (review.isEmpty()) return false;
@@ -122,7 +125,8 @@ public class ReviewServiceImpl implements ReviewService {
                 return reviewUpdated != null;
             }
         }
-        return false;
+        return false;*/
+        throw new NotImplementedException();
     }
 
     @Override
@@ -147,7 +151,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Boolean DeleteReview(Long reviewId)  {
-
+/*
         Optional<Review> rev = repository.findById(reviewId);
 
         if (rev.isEmpty()){
@@ -159,7 +163,8 @@ public class ReviewServiceImpl implements ReviewService {
             repository.delete(r);
             return true;
         }
-        return false;
+        return false;*/
+        throw new NotImplementedException();
     }
 
     @Override
@@ -176,7 +181,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDTO moderateReview(Long reviewID, VoteReviewDTO voteReviewDTO) throws ResourceNotFoundException, IllegalArgumentException {
-
+/*
         Optional<Review> r = repository.findById(reviewID);
 
         if(r.isEmpty()){
@@ -195,13 +200,14 @@ public class ReviewServiceImpl implements ReviewService {
             this.template.convertAndSend(queue.getName(), review.getIdReview());
         }
 
-        return ReviewMapper.toDto(review);
+        return ReviewMapper.toDto(review);*/
+        throw new NotImplementedException();
     }
 
 
     @Override
     public void acceptReview(Long reviewID) throws ResourceNotFoundException, IllegalArgumentException {
-
+/*
         Optional<Review> r = repository.findById(reviewID);
 
         if(r.isEmpty()){
@@ -214,12 +220,13 @@ public class ReviewServiceImpl implements ReviewService {
             throw new IllegalArgumentException("Invalid status value");
         }
 
-        repository.save(r.get());
+        repository.save(r.get());*/
+        throw new NotImplementedException();
     }
 
     @Override
     public List<ReviewDTO> findReviewsByUser(Long userID) {
-
+/*
         final Optional<User> user = uRepository.findById(userID);
 
         if(user.isEmpty()) return null;
@@ -228,6 +235,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         if (r.isEmpty()) return null;
 
-        return ReviewMapper.toDtoList(r.get());
+        return ReviewMapper.toDtoList(r.get());*/
+        throw new NotImplementedException();
     }
 }
