@@ -151,7 +151,7 @@ public abstract class Review {
 
     public Rating getRating() {
         if(rating == null) {
-            return new Rating(0.0);
+            return null;
         }
         return rating;
     }

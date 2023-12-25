@@ -5,7 +5,7 @@ package com.isep.acme.model;
 import javax.persistence.*;
 import java.util.Objects;
 
-public class Rating {
+public abstract class Rating {
 
 
     private Long idRating;

@@ -10,7 +10,7 @@ import java.util.*;
 
 @Getter
 @Setter
-public class User implements UserDetails {
+public abstract class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 

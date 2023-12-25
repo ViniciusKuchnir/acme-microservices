@@ -31,8 +31,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void create(final ProductDetailDTO product) {
 
-        Iterable<Product_SQL> products = repository.findAll();
-
         final Product p = convertToProductEntity(product);
 
         if(p instanceof Product_Mongo){

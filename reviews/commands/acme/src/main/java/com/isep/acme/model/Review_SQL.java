@@ -188,7 +188,7 @@ public class Review_SQL extends Review{
     @Override
     public Rating getRating() {
         if(rating == null) {
-            return new Rating(0.0);
+            return new Rating_SQL(0.0);
         }
         return rating;
     }
