@@ -3,6 +3,15 @@ package com.isep.acme.application.dto;
 public class ProductDTO {
     private String sku;
     private String designation;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public ProductDTO(String sku, String designation) {
         this.sku = sku;

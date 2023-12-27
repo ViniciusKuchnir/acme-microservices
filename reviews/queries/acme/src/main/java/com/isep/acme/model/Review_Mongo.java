@@ -18,11 +18,11 @@ public class Review_Mongo extends Review{
     @Indexed(unique = true)
     private Long _idReview;
     private long _version;
+
     private String _approvalStatus;
     private String _reviewText;
     private List<Vote> _upVote;
     private List<Vote> _downVote;
-    private List<Vote> _acceptance;
     private String _report;
     private LocalDate _publishingDate;
     private String _funFact;
@@ -31,6 +31,7 @@ public class Review_Mongo extends Review{
     private Rating_Mongo _rating;
 
     protected Review_Mongo(){}
+
     public Review_Mongo(final Long idReview, final long version, final String approvalStatus, final String reviewText, final LocalDate publishingDate, final String funFact) {
         this._idReview = Objects.requireNonNull(idReview);
         this._version = Objects.requireNonNull(version);
@@ -65,27 +66,29 @@ public class Review_Mongo extends Review{
     }
 
     public Long getIdReview() {
-            return _idReview;
-        }
+        return _idReview;
+    }
+
     public String getApprovalStatus() {
-            return _approvalStatus;
-        }
+        return _approvalStatus;
+    }
 
     public Boolean setApprovalStatus(String approvalStatus) {
 
         if( approvalStatus.equalsIgnoreCase("pending") ||
-            approvalStatus.equalsIgnoreCase("approved") ||
-            approvalStatus.equalsIgnoreCase("rejected")) {
+                approvalStatus.equalsIgnoreCase("approved") ||
+                approvalStatus.equalsIgnoreCase("rejected")) {
 
             this._approvalStatus = approvalStatus;
             return true;
         }
-            return false;
+        return false;
     }
 
     public String getReviewText() {
-            return _reviewText;
-        }
+        return _reviewText;
+    }
+
     public void setReviewText(String reviewText) {
         if (reviewText == null || reviewText.isBlank()) {
             throw new IllegalArgumentException("Review Text is a mandatory attribute of Review.");
@@ -105,43 +108,50 @@ public class Review_Mongo extends Review{
     }
 
     public LocalDate getPublishingDate() {
-            return _publishingDate;
-        }
+        return _publishingDate;
+    }
+
     public void setPublishingDate(LocalDate publishingDate) {
-            this._publishingDate = publishingDate;
-        }
-    public List<Vote> getAcceptance() {
-            return _acceptance;
-        }
-    public void setAcceptance(List<Vote> acceptance) {
-            this._acceptance = acceptance;
-        }
+        this._publishingDate = publishingDate;
+    }
+
+    @Override
+    public LocalDate getCreationDate() {
+        return _publishingDate;
+    }
+
+    @Override
+    public void setCreationDate(LocalDate creationDate) {
+        this._publishingDate = creationDate;
+    }
+
     public long getVersion() {
-            return _version;
-        }
+        return _version;
+    }
+
     public String getFunFact() {
-            return _funFact;
-        }
+        return _funFact;
+    }
 
     public void setFunFact(String funFact) {
-            this._funFact = funFact;
-        }
+        this._funFact = funFact;
+    }
 
     public void setProduct(Product product) {
         this._product = new Product_Mongo(product.getSku(),product.getDesignation(),product.getDescription());
     }
 
     public Product getProduct() {
-            return _product;
-        }
+        return _product;
+    }
 
     public User getUser() {
-            return _user;
-        }
+        return _user;
+    }
 
     public void setUser(User user) {
-            this._user = new User_Mongo(user.getUsername(),user.getPassword());
-        }
+        this._user = new User_Mongo(user.getUsername(),user.getPassword());
+    }
 
     public Rating getRating() {
         if(_rating == null) {
@@ -151,24 +161,35 @@ public class Review_Mongo extends Review{
     }
 
     public void setRating(Rating rating) {
-            this._rating = new Rating_Mongo(rating.getRate());
-        }
+        this._rating = new Rating_Mongo(rating.getRate());
+    }
 
     public List<Vote> getUpVote() {
-            return _upVote != null ? _upVote : new ArrayList<>();
-        }
+        return _upVote != null ? _upVote : new ArrayList<>();
+    }
 
     public void setUpVote(List<Vote> upVote) {
-            this._upVote = upVote;
-        }
+        this._upVote = upVote;
+    }
+
+    @Override
+    public List<Vote> getAcceptance() {
+        return null;
+    }
+
+    @Override
+    public void setAcceptance(List<Vote> acceptance) {
+
+    }
 
     public List<Vote> getDownVote() {
-            return _downVote!= null? _downVote : new ArrayList<>();
-        }
+        return _downVote!= null? _downVote : new ArrayList<>();
+    }
 
     public void setDownVote(List<Vote> downVote) {
-            this._downVote = downVote;
-        }
+        this._downVote = downVote;
+    }
+
     public boolean addUpVote(Vote upVote) {
 
         if( !this._approvalStatus.equals("approved"))
@@ -178,7 +199,7 @@ public class Review_Mongo extends Review{
             this._upVote.add(upVote);
             return true;
         }
-            return false;
+        return false;
     }
 
     public boolean addDownVote(Vote downVote) {
@@ -190,6 +211,6 @@ public class Review_Mongo extends Review{
             this._downVote.add(downVote);
             return true;
         }
-            return false;
+        return false;
     }
 }

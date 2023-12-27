@@ -3,16 +3,18 @@ package com.isep.acme.model;
 import com.isep.acme.application.dto.ProductDTO;
 
 import javax.persistence.*;
+import java.util.Random;
 
 @Entity
-public abstract class Product {
+@Table(name = "Product")
+public class Product_SQL extends Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long productID;
 
     @Column(nullable = false, unique = true)
-    private String sku;
+    public String sku;
 
     @Column(nullable = false)
     private String designation;
@@ -20,26 +22,25 @@ public abstract class Product {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "created_by")
-    private User createdBy;
-
-    @Column(name = "number_approvals")
-    private Integer numberApprovals = 0;
-
     /*
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Review> review = new ArrayList<Review>(); */
 
-    protected Product(){}
+    protected Product_SQL(){}
 
-    public Product(final String sku, final String designation, final String description, final User createdBy) {
+    public Product_SQL(String sku, String designation, String description){
+        this.productID = Math.abs(new Random().nextLong());
+        this.sku = sku;
+        this.designation = designation;
+        this.description = description;
+    }
+
+    public Product_SQL(final String sku, final String designation, final String description, final User createdBy) {
         setSku(sku);
         setDesignation(designation);
         setDescription(description);
-        this.createdBy = createdBy;
     }
-
+    @Override
     public void setSku(String sku) {
         if (sku == null || sku.isBlank()) {
             throw new IllegalArgumentException("SKU is a mandatory attribute of Product.");
@@ -50,11 +51,11 @@ public abstract class Product {
 
         this.sku = sku;
     }
-
+    @Override
     public String getDesignation() {
         return designation;
     }
-
+    @Override
     public void setDesignation(String designation) {
         if (designation == null || designation.isBlank()) {
             throw new IllegalArgumentException("Designation is a mandatory attribute of Product.");
@@ -64,11 +65,12 @@ public abstract class Product {
         }
         this.designation = designation;
     }
-
+    @Override
     public String getDescription() {
         return description;
     }
 
+    @Override
     public void setDescription(String description) {
         if (description == null || description.isBlank()) {
             throw new IllegalArgumentException("Description is a mandatory attribute of Product.");
@@ -81,37 +83,21 @@ public abstract class Product {
         this.description = description;
     }
 
+    @Override
     public String getSku() {
         return sku;
     }
 
-    public User getCreatedBy(){
-        return this.createdBy;
+    @Override
+    public void updateProduct(ProductDTO p) {
+        setDesignation(p.getDesignation());
+        setDescription(p.getDescription());
     }
-
-    public Integer getNumberApprovals(){
-        return this.numberApprovals;
-    }
-
-    public void setNumberApprovals(Integer numberApprovals){
-        this.numberApprovals = numberApprovals;
-    }
-
-    public void updateProduct(Product p) {
-        setDesignation(p.designation);
-        setDescription(p.description);
-
-    }
-
-    public abstract void updateProduct(ProductDTO p);
-
+    @Override
     public Long getProductID() {
         return productID;
     }
 
-    public ProductDTO toDto() {
-        return new ProductDTO(this.sku, this.designation);
-    }
 /*
     public List<Review> getReview() {
         return review;

@@ -1,7 +1,6 @@
 package com.isep.acme.model;
 
-import com.isep.acme.application.dto.products.ProductDTO;
-import lombok.Getter;
+import com.isep.acme.application.dto.ProductDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -21,9 +20,7 @@ public class Product_Mongo extends Product {
     private String _designation;
     private String _description;
 
-    protected Product_Mongo() {
-        super();
-    }
+    protected Product_Mongo() {    }
 
     public Product_Mongo(final Long productID, final String sku) {
         this._productID = Objects.requireNonNull(productID);
@@ -78,5 +75,4 @@ public class Product_Mongo extends Product {
     public Long getProductID() {
         return this._productID;
     }
-
 }

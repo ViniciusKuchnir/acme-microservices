@@ -246,9 +246,10 @@ public class ReviewServiceImpl implements ReviewService {
 
             var lista = r.get().getAcceptance();
 
-            lista.add(new Vote("accepted",voteReviewDTO.getUserID()));
-
-            r.get().setAcceptance(lista);
+            if(voteReviewDTO.getVote().equalsIgnoreCase("accepted")){
+                lista.add(new Vote("accepted",voteReviewDTO.getUserID()));
+                r.get().setAcceptance(lista);
+            }
 
             Review review = repositoryMongo.save(r.get());
 

@@ -3,43 +3,16 @@ package com.isep.acme.model;
 
 import javax.persistence.*;
 
-@Entity
-public class AggregatedRating {
+public abstract class AggregatedRating {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long aggregatedId;
+    public abstract double getAverage();
 
-    @Column()
-    private double average;
+    public abstract void setAverage(double average);
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
-    private Product product;
+    public abstract Product getProduct();
 
-    protected AggregatedRating() {}
+    public abstract void setProduct(Product product);
 
-    public AggregatedRating(double average, Product product) {
-        this.average = average;
-        this.product = product;
+    public abstract Long getAggregatedId();
+
     }
-
-    public double getAverage() {
-        return average;
-    }
-
-    public void setAverage(double average) {
-        this.average = average;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Long getAggregatedId() {
-        return aggregatedId;
-    }
-}

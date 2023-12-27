@@ -1,7 +1,10 @@
 package com.isep.acme.bootstrapper;
 
 import com.isep.acme.application.interfaces.repository.ReviewRepositoryMongo;
-import com.isep.acme.model.*;
+import com.isep.acme.model.Product_Mongo;
+import com.isep.acme.model.Rating_Mongo;
+import com.isep.acme.model.Review_Mongo;
+import com.isep.acme.model.User_Mongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -32,9 +35,9 @@ public class ReviewBootstrapperMongo implements CommandLineRunner {
                 new Rating_Mongo(4.5),
                 new User_Mongo("admin1@mail.com", encoder.encode("AdminPW1"),
                         "Jose Antonio", "355489123", "Rua Um")
-        );
+                );
 
-        repo.save(review);
+            repo.save(review);
     }
 
 }
