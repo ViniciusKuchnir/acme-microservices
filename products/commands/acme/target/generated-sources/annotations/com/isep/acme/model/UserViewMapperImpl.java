@@ -1,12 +1,12 @@
 package com.isep.acme.model;
 
-import javax.annotation.processing.Generated;
+import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-12-08T16:34:44+0000",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Oracle Corporation)"
+    date = "2023-12-27T19:25:13+0000",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17 (Oracle Corporation)"
 )
 @Component
 public class UserViewMapperImpl extends UserViewMapper {

@@ -1,5 +1,7 @@
 package com.isep.acme.controllers;
 
+import com.isep.acme.model.Product;
+import com.isep.acme.services.ProductCsvWriter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.isep.acme.model.ProductDTO;
 import com.isep.acme.services.ProductService;
 
+import java.io.IOException;
 import java.util.Optional;
 
 
@@ -29,8 +32,7 @@ class ProductController {
     @GetMapping
     public ResponseEntity<Iterable<ProductDTO>> getCatalog() {
        final var products = service.getCatalog();
-
-       return ResponseEntity.ok().body( products );
+        return ResponseEntity.ok().body( products );
     }
 
     @Operation(summary = "finds product by sku")
