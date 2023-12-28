@@ -1,6 +1,6 @@
 package com.isep.acme.messageBroker;
 
-import com.isep.acme.services.ProductCsvWriter;
+import com.isep.acme.services.ProductServiceImpl;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,13 +19,13 @@ public class ProductCreatedListener {
     private ProductRepository repository;
 
     @Autowired
-    private ProductCsvWriter productCsvWriter;
+    private ProductServiceImpl productServiceImpl;
 
     @RabbitListener(queues = "products.v1.product-created")
     public ProductDTO onProductCreated(ProductDetailDTO event){
         Product product = new Product(event.getSku(), event.getDesignation(), event.getDescription());
         try{
-            productCsvWriter.writeProductToCsv(product, "product.csv");
+            productServiceImpl.writeProductToCsv(product);
             System.out.println("CSV EXPORT SUCESSFUL!!!");
         }  catch (IOException e) {
             e.printStackTrace();
