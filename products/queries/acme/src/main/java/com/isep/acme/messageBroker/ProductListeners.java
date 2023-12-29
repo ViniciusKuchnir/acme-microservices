@@ -38,13 +38,19 @@ public class ProductListeners {
             System.out.println("PRODUCT UPDATED!");
         }  catch (Exception e) {
             e.printStackTrace();
-            System.out.println("ERROR: PRODUCT NO BE ABLE UPDATED!");
+            System.out.println("ERROR: PRODUCT NOT BE ABLE UPDATED!");
         }
     }
 
     @RabbitListener(queues = "products.v1.product-deleted")
     public void onProductDeleted(String sku){
-        System.out.println("ENTROU NA FUNÇÃO DELETE, MAS NÃO ESTA DELETANDO NA BASE");
+        try{
+            productServiceImpl.deleteBySku(sku);
+            System.out.println("PRODUCT DELETED!");
+        }  catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("ERROR: PRODUCT NOT BE ABLE DELETED!");
+        }
     }
 
 }

@@ -98,7 +98,36 @@ public class ProductServiceImpl implements ProductService {
     }
     @Override
     public void deleteBySku(String sku) {
+        List<String[]> updatedRecords = new ArrayList<>();
 
+        try (CSVReader csvReader = new CSVReaderBuilder(new FileReader(filePath)).build()) {
+            String[] nextRecord;
+
+            // Pula o cabeçalho se existir
+            csvReader.readNext();
+
+            while ((nextRecord = csvReader.readNext()) != null) {
+                String currentSku = nextRecord[0];
+
+                if (!currentSku.equals(sku)) {
+                    // Adiciona apenas os registros que não correspondem ao SKU fornecido
+                    updatedRecords.add(nextRecord);
+                }
+            }
+        } catch (IOException | CsvValidationException e) {
+            e.printStackTrace();
+        }
+
+        // Escreve os registros atualizados de volta no arquivo CSV
+        try (ICSVWriter csvWriter = new CSVWriterBuilder(new FileWriter(filePath)).build()) {
+            csvWriter.writeNext(new String[]{"SKU", "Designation", "Description"});
+
+            for (String[] record : updatedRecords) {
+                csvWriter.writeNext(record);
+            }
+        } catch (IOException e) {
+            e.printStackTrace(); // ou lidar com a exceção de outra forma
+        }
     }
 
 
