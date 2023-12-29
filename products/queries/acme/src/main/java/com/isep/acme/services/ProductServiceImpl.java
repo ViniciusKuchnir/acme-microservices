@@ -7,9 +7,7 @@ import com.isep.acme.model.User;
 import com.isep.acme.repositories.ProductRepository;
 import com.isep.acme.repositories.UserRepository;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.CSVWriter;
+import com.opencsv.*;
 import com.opencsv.exceptions.CsvValidationException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -27,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
 
     private Set<String> processedSkus = new HashSet<>();
     private String filePath = "product.csv";
-    public void writeProductToCsv(Product product) throws IOException {
+    public void create(Product product) throws IOException {
         boolean fileExists = new File(filePath).exists();
 
         try (CSVWriter csvWriter = new CSVWriter(new FileWriter(filePath, true))) {
@@ -52,6 +50,55 @@ public class ProductServiceImpl implements ProductService {
             // Flush e feche o escritor
             csvWriter.flush();
         }
+    }
+
+    @Override
+    public ProductDTO updateBySku(String sku, Product product) {
+        List<String[]> updatedRecords = new ArrayList<>();
+        ProductDTO updatedProductDTO = null;
+
+        // Lê os registros existentes do arquivo CSV
+        try (CSVReader csvReader = new CSVReaderBuilder(new FileReader(filePath)).build()) {
+            String[] nextRecord;
+
+            // Pula o cabeçalho se existir
+            csvReader.readNext();
+
+            while ((nextRecord = csvReader.readNext()) != null) {
+                String currentSku = nextRecord[0];
+
+                if (currentSku.equals(sku)) {
+                    // Atualiza os dados do produto se encontrar o SKU correspondente
+                    nextRecord[1] = product.getDesignation();
+                    nextRecord[2] = product.getDescription();
+
+                    updatedProductDTO = new ProductDTO(product.getDesignation(), product.getDescription());
+                }
+
+                updatedRecords.add(nextRecord);
+            }
+        } catch (IOException | CsvValidationException e) {
+            e.printStackTrace();
+        }
+
+        // Escreve os registros atualizados de volta no arquivo CSV
+        try (ICSVWriter csvWriter = new CSVWriterBuilder(new FileWriter(filePath, false)).build()) {
+            // Escreve o cabeçalho
+            csvWriter.writeNext(new String[]{"SKU", "Designation", "Description"});
+
+            // Escreve todos os registros, incluindo os atualizados
+            for (String[] record : updatedRecords) {
+                csvWriter.writeNext(record);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return updatedProductDTO;
+    }
+    @Override
+    public void deleteBySku(String sku) {
+
     }
 
 
