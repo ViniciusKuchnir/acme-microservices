@@ -67,6 +67,12 @@ public class ProductServiceImpl implements ProductService {
         productToUpdate.get().updateProduct(product);
 
         Product productUpdated = repository.save(productToUpdate.get());
+
+        //QueueName
+        String routingKey = "products.v1.product-updated";
+        ProductDetailDTO event = new ProductDetailDTO(productToUpdate.get().getSku(), productToUpdate.get().getDesignation(), productToUpdate.get().getDescription());
+
+        rabbitTemplate.convertAndSend(routingKey, event);
         
         return productUpdated.toDto();
     }
@@ -74,5 +80,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteBySku(String sku) {
         repository.deleteBySku(sku);
+        //QueueName
+        String routingKey = "products.v1.product-deleted";
+
+        rabbitTemplate.convertAndSend(routingKey, sku);
     }
 }

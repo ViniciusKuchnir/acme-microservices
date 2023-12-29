@@ -13,25 +13,38 @@ import com.isep.acme.repositories.ProductRepository;
 import java.io.IOException;
 
 @Component
-public class ProductCreatedListener {
-    
-    @Autowired
-    private ProductRepository repository;
+public class ProductListeners {
 
     @Autowired
     private ProductServiceImpl productServiceImpl;
 
     @RabbitListener(queues = "products.v1.product-created")
-    public ProductDTO onProductCreated(ProductDetailDTO event){
+    public void onProductCreated(ProductDetailDTO event){
         Product product = new Product(event.getSku(), event.getDesignation(), event.getDescription());
         try{
-            productServiceImpl.writeProductToCsv(product);
+            productServiceImpl.create(product);
             System.out.println("CSV EXPORT SUCESSFUL!!!");
         }  catch (IOException e) {
             e.printStackTrace();
             System.out.println("ERROR EXPORTING CSV");
         }
-
-        return repository.save(product).toDto();
     }
+
+    @RabbitListener(queues = "products.v1.product-updated")
+    public void onProductUpdated(ProductDetailDTO productDetailDTO){
+        Product product = new Product(productDetailDTO.getSku(), productDetailDTO.getDesignation(), productDetailDTO.getDescription());
+        try{
+            productServiceImpl.updateBySku(product.getSku(), product);
+            System.out.println("PRODUCT UPDATED!");
+        }  catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("ERROR: PRODUCT NO BE ABLE UPDATED!");
+        }
+    }
+
+    @RabbitListener(queues = "products.v1.product-deleted")
+    public void onProductDeleted(String sku){
+        System.out.println("ENTROU NA FUNÇÃO DELETE, MAS NÃO ESTA DELETANDO NA BASE");
+    }
+
 }
