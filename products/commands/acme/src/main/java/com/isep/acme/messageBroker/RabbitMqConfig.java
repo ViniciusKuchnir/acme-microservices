@@ -14,9 +14,20 @@ import org.springframework.context.ApplicationListener;
 public class RabbitMqConfig {
     
     @Bean
-    public Queue queue(){
+    public Queue queueProductCreated(){
         return new Queue("products.v1.product-created");
     }
+
+    @Bean
+    public Queue queueProductDeleted(){
+        return new Queue("products.v1.product-deleted");
+    }
+
+    @Bean
+    public Queue queueProductUpdated(){
+        return new Queue("products.v1.product-updated");
+    }
+
 
     @Bean
     public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory){

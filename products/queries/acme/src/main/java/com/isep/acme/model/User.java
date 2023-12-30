@@ -36,10 +36,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String morada;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "role_id")
-    private RoleUser role;
-
 
 /*    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Review> review = new ArrayList<Review>(); */
@@ -52,13 +48,12 @@ public class User implements UserDetails {
     }
 
 
-    public User(final String username, final String password, final String fullName, final String nif, final String morada, final RoleUser role) {
+    public User(final String username, final String password, final String fullName, final String nif, final String morada) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         setNif(nif);
         this.morada = morada;
-        this.role = role;
     }
 
     public void addAuthority(Role r) {
@@ -71,15 +66,6 @@ public class User implements UserDetails {
         }
         this.nif = nif;
     }
-
-    public void setRole(RoleUser role) {
-        this.role = role;
-    }
-
-    public RoleUser getRole(){
-        return this.role;
-    }
-
 
     @Override
     public boolean isAccountNonExpired() {

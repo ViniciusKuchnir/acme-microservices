@@ -1,5 +1,6 @@
 package com.isep.acme.services;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import com.isep.acme.model.Product;
@@ -18,5 +19,11 @@ public interface ProductService {
     Iterable<ProductDTO> getCatalog();
 
     ProductDetailDTO getDetails(final String sku);
+
+    void create(final Product manager) throws IOException;
+
+    ProductDTO updateBySku(final String sku, final Product product);
+
+    void deleteBySku(final String sku);
 
 }

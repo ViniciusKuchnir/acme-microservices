@@ -8,10 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.isep.acme.model.Product;
 import com.isep.acme.model.Role;
-import com.isep.acme.model.RoleUser;
 import com.isep.acme.model.User;
 import com.isep.acme.repositories.ProductRepository;
-import com.isep.acme.repositories.RoleUserRepository;
 import com.isep.acme.repositories.UserRepository;
 
 @Component
@@ -25,54 +23,42 @@ public class UserBootstrapper implements CommandLineRunner {
     private PasswordEncoder encoder;
 
     @Autowired
-    private RoleUserRepository roleUserRepository;
-
-    @Autowired
     private ProductRepository pRepo;
 
     @Override
     public void run(String... args) throws Exception {
-        RoleUser roleManager = new RoleUser("Manager");
-        roleUserRepository.save(roleManager);
-
-        RoleUser roleAdmin = new RoleUser("Admin");
-        roleUserRepository.save(roleAdmin);
-
-        RoleUser roleUserDefault = new RoleUser("Default");
-        roleUserRepository.save(roleUserDefault);
-
         // admin
         if(userRepo.findByUsername("admin1@mail.com").isEmpty()) {
             User admin1 = new User("admin1@mail.com", encoder.encode("AdminPW1"),
-                    "Jose Antonio", "355489123", "Rua Um", roleManager);
+                    "Jose Antonio", "355489123", "Rua Um");
             admin1.addAuthority(new Role(Role.Admin));
             userRepo.save(admin1);
 
              if (pRepo.findBySku("asd578fgh267").isEmpty()) {
-                 Product p1 = new Product("asd578fgh267", "Pen", "very good nice product", admin1);
+                 Product p1 = new Product("asd578fgh267", "Pen", "very good nice product");
                  pRepo.save(p1);
              }
          }
 
         if(userRepo.findByUsername("admin2@mail.com").isEmpty()) {
             User admin2 = new User("admin2@mail.com", encoder.encode("AdminPW2"),
-                    "Vinícius Kuchnir", "111111111", "Rua Arquitetura de Software", roleManager);
+                    "Vinícius Kuchnir", "111111111", "Rua Arquitetura de Software");
             admin2.addAuthority(new Role(Role.Admin));
             userRepo.save(admin2);
 
              if (pRepo.findBySku("c1d4e7r8d5f2").isEmpty()) {
-                 Product p2 = new Product("c1d4e7r8d5f2", "Pencil", " writes", admin2);
+                 Product p2 = new Product("c1d4e7r8d5f2", "Pencil", " writes");
                  pRepo.save(p2);
              }
         }
 
         User admin3 = new User("admin3@mail.com", encoder.encode("AdminPW3"),
-                    "Vinícius Kuchnir", "444444444", "Rua Arquitetura de Software II", roleManager);
+                    "Vinícius Kuchnir", "444444444", "Rua Arquitetura de Software II");
             admin3.addAuthority(new Role(Role.Admin));
             userRepo.save(admin3);
 
         User user1 = new User("user1@mail.com", encoder.encode("UserPW1"),
-                    "Vinícius Kuchnir", "333333333", "Rua Arquitetura de Software", roleUserDefault);
+                    "Vinícius Kuchnir", "333333333", "Rua Arquitetura de Software");
             user1.addAuthority(new Role(Role.Admin));
             userRepo.save(user1);
 
