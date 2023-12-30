@@ -13,6 +13,7 @@ import com.isep.acme.repositories.ProductRepository;
 public class ProductBootstrapper implements CommandLineRunner {
 
 
+
     @Autowired
     private ProductService productService;
 
