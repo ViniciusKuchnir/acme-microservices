@@ -1,0 +1,68 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: acme-users
+  namespace: default
+  uid: 13b1a223-9210-465d-a78c-f5cbf558d4a5
+  resourceVersion: '7557'
+  creationTimestamp: '2023-12-30T20:48:05Z'
+  labels:
+    app: acme-users
+  managedFields:
+    - manager: kubectl-expose
+      operation: Update
+      apiVersion: v1
+      time: '2023-12-30T20:48:05Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:app: {}
+        f:spec:
+          f:allocateLoadBalancerNodePorts: {}
+          f:externalTrafficPolicy: {}
+          f:internalTrafficPolicy: {}
+          f:ports:
+            .: {}
+            k:{"port":8080,"protocol":"TCP"}:
+              .: {}
+              f:port: {}
+              f:protocol: {}
+              f:targetPort: {}
+          f:selector: {}
+          f:sessionAffinity: {}
+          f:type: {}
+    - manager: minikube.exe
+      operation: Update
+      apiVersion: v1
+      time: '2023-12-30T21:04:24Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:loadBalancer:
+            f:ingress: {}
+      subresource: status
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30866
+  selector:
+    app: acme-users
+  clusterIP: 10.108.0.245
+  clusterIPs:
+    - 10.108.0.245
+  type: LoadBalancer
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  allocateLoadBalancerNodePorts: true
+  internalTrafficPolicy: Cluster
+status:
+  loadBalancer:
+    ingress:
+      - ip: 127.0.0.1

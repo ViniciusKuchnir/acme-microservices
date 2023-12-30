@@ -1,0 +1,71 @@
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v1
+metadata:
+  name: acme-users
+  namespace: default
+  uid: d16e2063-86e9-4f95-8da2-15bb11cf6171
+  resourceVersion: '10997'
+  creationTimestamp: '2023-12-30T21:14:19Z'
+  annotations:
+    autoscaling.alpha.kubernetes.io/conditions: >-
+      [{"type":"AbleToScale","status":"True","lastTransitionTime":"2023-12-30T22:11:39Z","reason":"SucceededGetScale","message":"the
+      HPA controller was able to get the target's current
+      scale"},{"type":"ScalingActive","status":"False","lastTransitionTime":"2023-12-30T21:14:34Z","reason":"FailedGetResourceMetric","message":"the
+      HPA was unable to compute the replica count: failed to get cpu
+      utilization: missing request for cpu in container acme-users-6gc8b of Pod
+      acme-users-64566dc57b-4f98r"}]
+  managedFields:
+    - manager: kubectl-autoscale
+      operation: Update
+      apiVersion: autoscaling/v1
+      time: '2023-12-30T21:14:19Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:maxReplicas: {}
+          f:minReplicas: {}
+          f:scaleTargetRef: {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: autoscaling/v2
+      time: '2023-12-30T22:12:21Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:conditions:
+            .: {}
+            k:{"type":"AbleToScale"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"ScalingActive"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:currentReplicas: {}
+      subresource: status
+    - manager: dashboard
+      operation: Update
+      apiVersion: autoscaling/v1
+      time: '2023-12-30T22:12:47Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:targetCPUUtilizationPercentage: {}
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: acme-users
+    apiVersion: apps/v1
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 10
+status:
+  currentReplicas: 1
+  desiredReplicas: 0

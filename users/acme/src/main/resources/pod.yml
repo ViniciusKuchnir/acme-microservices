@@ -1,0 +1,178 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: acme-users-64566dc57b-4f98r
+  generateName: acme-users-64566dc57b-
+  namespace: default
+  uid: 9bf6cccd-59f4-4131-9b9a-ade4287f6e52
+  resourceVersion: '6776'
+  creationTimestamp: '2023-12-30T20:47:44Z'
+  labels:
+    app: acme-users
+    pod-template-hash: 64566dc57b
+  ownerReferences:
+    - apiVersion: apps/v1
+      kind: ReplicaSet
+      name: acme-users-64566dc57b
+      uid: 2573b9be-60b4-4107-9909-b98285bdf38b
+      controller: true
+      blockOwnerDeletion: true
+  managedFields:
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2023-12-30T20:47:44Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:generateName: {}
+          f:labels:
+            .: {}
+            f:app: {}
+            f:pod-template-hash: {}
+          f:ownerReferences:
+            .: {}
+            k:{"uid":"2573b9be-60b4-4107-9909-b98285bdf38b"}: {}
+        f:spec:
+          f:containers:
+            k:{"name":"acme-users-6gc8b"}:
+              .: {}
+              f:image: {}
+              f:imagePullPolicy: {}
+              f:name: {}
+              f:resources: {}
+              f:terminationMessagePath: {}
+              f:terminationMessagePolicy: {}
+          f:dnsPolicy: {}
+          f:enableServiceLinks: {}
+          f:restartPolicy: {}
+          f:schedulerName: {}
+          f:securityContext: {}
+          f:terminationGracePeriodSeconds: {}
+    - manager: kubelet
+      operation: Update
+      apiVersion: v1
+      time: '2023-12-30T20:48:35Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:conditions:
+            k:{"type":"ContainersReady"}:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Initialized"}:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Ready"}:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:status: {}
+              f:type: {}
+          f:containerStatuses: {}
+          f:hostIP: {}
+          f:phase: {}
+          f:podIP: {}
+          f:podIPs:
+            .: {}
+            k:{"ip":"10.244.0.6"}:
+              .: {}
+              f:ip: {}
+          f:startTime: {}
+      subresource: status
+spec:
+  volumes:
+    - name: kube-api-access-mblwh
+      projected:
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+                - key: ca.crt
+                  path: ca.crt
+          - downwardAPI:
+              items:
+                - path: namespace
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+        defaultMode: 420
+  containers:
+    - name: acme-users-6gc8b
+      image: leandrosousa1190800/acme_users:latest
+      resources: {}
+      volumeMounts:
+        - name: kube-api-access-mblwh
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      imagePullPolicy: Always
+  restartPolicy: Always
+  terminationGracePeriodSeconds: 30
+  dnsPolicy: ClusterFirst
+  serviceAccountName: default
+  serviceAccount: default
+  nodeName: minikube
+  securityContext: {}
+  schedulerName: default-scheduler
+  tolerations:
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+  priority: 0
+  enableServiceLinks: true
+  preemptionPolicy: PreemptLowerPriority
+status:
+  phase: Running
+  conditions:
+    - type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2023-12-30T20:47:44Z'
+    - type: Ready
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2023-12-30T20:48:35Z'
+    - type: ContainersReady
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2023-12-30T20:48:35Z'
+    - type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2023-12-30T20:47:44Z'
+  hostIP: 192.168.49.2
+  podIP: 10.244.0.6
+  podIPs:
+    - ip: 10.244.0.6
+  startTime: '2023-12-30T20:47:44Z'
+  containerStatuses:
+    - name: acme-users-6gc8b
+      state:
+        running:
+          startedAt: '2023-12-30T20:48:35Z'
+      lastState: {}
+      ready: true
+      restartCount: 0
+      image: leandrosousa1190800/acme_users:latest
+      imageID: >-
+        docker-pullable://leandrosousa1190800/acme_users@sha256:e74ee20bd43a5d7e356eed7346eaedd22f37317da8771305d7342f97a5a6f786
+      containerID: >-
+        docker://15956bea01b4a4a9f03954b63665aa37770b5cd938a90c9b2179ebe441b58d18
+      started: true
+  qosClass: BestEffort
