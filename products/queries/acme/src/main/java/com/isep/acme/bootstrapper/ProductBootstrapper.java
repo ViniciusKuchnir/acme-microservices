@@ -12,6 +12,8 @@ import com.isep.acme.repositories.ProductRepository;
 //@Profile("bootstrap")
 public class ProductBootstrapper implements CommandLineRunner {
 
+
+
     @Autowired
     private ProductService productService;
 
