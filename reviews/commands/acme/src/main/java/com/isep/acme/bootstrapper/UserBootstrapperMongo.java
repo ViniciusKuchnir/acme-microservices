@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("mongo")
+@Profile("bootstrap")
 public class UserBootstrapperMongo implements CommandLineRunner {
 
     @Autowired

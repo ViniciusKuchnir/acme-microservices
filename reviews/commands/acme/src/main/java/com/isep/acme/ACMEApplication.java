@@ -15,7 +15,6 @@ import java.awt.image.BufferedImage;
 @EnableConfigurationProperties({
 		FileStorageProperties.class
 })
-
 public class ACMEApplication {
 
 	public static void main(String[] args) {
