@@ -4,62 +4,40 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
 
-@Entity
-public class Review {
+public abstract class Review {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idReview;
-
-    @Version
     private long version;
-
-    @Column(nullable = false)
     private String approvalStatus;
-
-    @Column(nullable = false)
     private String reviewText;
-
-    @ElementCollection
-    @Column(nullable = true)
     private List<Vote> upVote;
-
-    @ElementCollection
-    @Column(nullable = true)
     private List<Vote> downVote;
-
-    @Column(nullable = true)
+    private  List<Vote> acceptance;
     private String report;
-
-    @Column(nullable = false)
     private LocalDate publishingDate;
-
-    @Column(nullable = false)
+    private LocalDate creationDate;
     private String funFact;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
     private Rating rating;
 
     protected Review(){}
 
-    public Review(final Long idReview, final long version, final String approvalStatus, final String reviewText, final LocalDate publishingDate, final String funFact) {
+    public Review(final Long idReview, final long version, final String approvalStatus,
+                  final String reviewText, final LocalDate creationDate, final String funFact) {
         this.idReview = Objects.requireNonNull(idReview);
         this.version = Objects.requireNonNull(version);
         setApprovalStatus(approvalStatus);
         setReviewText(reviewText);
-        setPublishingDate(publishingDate);
+        setCreationDate(creationDate);
         setFunFact(funFact);
     }
 
-    public Review(final Long idReview, final long version, final String approvalStatus, final  String reviewText, final List<Vote> upVote, final List<Vote> downVote, final String report, final LocalDate publishingDate, final String funFact, Product product, Rating rating, User user) {
+    public Review(final Long idReview, final long version, final String approvalStatus,
+                  final  String reviewText, final List<Vote> upVote, final List<Vote> downVote,
+                  final String report, final LocalDate publishingDate, final String funFact,
+                  Product product, Rating rating, User user) {
+
         this(idReview, version, approvalStatus, reviewText, publishingDate, funFact);
 
         setUpVote(upVote);
@@ -71,14 +49,16 @@ public class Review {
 
     }
 
-    public Review(final String reviewText, LocalDate publishingDate, Product product, String funFact, Rating rating, User user) {
+    public Review(final String reviewText, LocalDate creationDate, Product product,
+                  String funFact, Rating rating, User user) {
         setReviewText(reviewText);
         setProduct(product);
-        setPublishingDate(publishingDate);
+        setCreationDate(creationDate);
         setApprovalStatus("pending");
         setFunFact(funFact);
         setRating(rating);
         setUser(user);
+        this.acceptance = new ArrayList<>();
         this.upVote = new ArrayList<>();
         this.downVote = new ArrayList<>();
     }
@@ -94,9 +74,9 @@ public class Review {
     public Boolean setApprovalStatus(String approvalStatus) {
 
         if( approvalStatus.equalsIgnoreCase("pending") ||
-            approvalStatus.equalsIgnoreCase("approved") ||
-            approvalStatus.equalsIgnoreCase("rejected")) {
-            
+                approvalStatus.equalsIgnoreCase("approved") ||
+                approvalStatus.equalsIgnoreCase("rejected")) {
+
             this.approvalStatus = approvalStatus;
             return true;
         }
@@ -133,6 +113,14 @@ public class Review {
         this.publishingDate = publishingDate;
     }
 
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
     public long getVersion() {
         return version;
     }
@@ -163,7 +151,7 @@ public class Review {
 
     public Rating getRating() {
         if(rating == null) {
-            return new Rating(0.0);
+            return null;
         }
         return rating;
     }
@@ -178,6 +166,13 @@ public class Review {
 
     public void setUpVote(List<Vote> upVote) {
         this.upVote = upVote;
+    }
+    public List<Vote> getAcceptance() {
+        return acceptance;
+    }
+
+    public void setAcceptance(List<Vote> acceptance) {
+        this.acceptance = acceptance;
     }
 
     public List<Vote> getDownVote() {

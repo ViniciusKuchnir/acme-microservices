@@ -1,5 +1,6 @@
 package com.isep.acme.application.interfaces.repository;
 
+import com.isep.acme.model.User_SQL;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,21 +16,21 @@ import java.util.Optional;
 
 @Repository
 @CacheConfig(cacheNames = "users")
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User_SQL, Long> {
 
     @Override
     @Caching(evict = {
             @CacheEvict(key = "#p0.userId", condition = "#p0.userId != null"),
             @CacheEvict(key = "#p0.username", condition = "#p0.username != null") })
-    <S extends User> S save(S entity);
+    <S extends User_SQL> S save(S entity);
 
     @Override
     @Cacheable
-    Optional<User> findById(Long userId);
+    Optional<User_SQL> findById(Long userId);
 
     @Cacheable
     default User getById(final Long userId){
-        final Optional<User> optionalUser = findById(userId);
+        final Optional<User_SQL> optionalUser = findById(userId);
 
         if(optionalUser.isEmpty()){
             throw new ResourceNotFoundException(User.class, userId);

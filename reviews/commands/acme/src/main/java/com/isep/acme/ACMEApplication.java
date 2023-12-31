@@ -25,4 +25,5 @@ public class ACMEApplication {
 	public HttpMessageConverter<BufferedImage> createImageHttpMessageConverter() {
 		return new BufferedImageHttpMessageConverter();
 	}
+
 }

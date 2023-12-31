@@ -1,6 +1,6 @@
 package com.isep.acme.application.mapper;
 
-import com.isep.acme.application.dto.ReviewDTO;
+import com.isep.acme.application.dto.reviews.ReviewDTO;
 import com.isep.acme.model.Review;
 
 import java.util.ArrayList;

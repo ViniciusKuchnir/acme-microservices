@@ -5,17 +5,11 @@ package com.isep.acme.model;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
-public class Rating {
+public abstract class Rating {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long idRating;
-
-    @Version
     private long version;
-
-    @Column(nullable = false)
     private Double rate;
 
     protected Rating(){}

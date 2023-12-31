@@ -7,7 +7,7 @@ import com.isep.acme.model.ProductDTO;
 
 public interface ProductService {
 
-    ProductDTO create(final Product manager, final Long userId);
+    ProductDTO create(final ProductDTO manager);
 
     void approveProduct(final String sku, final Long userId);
     

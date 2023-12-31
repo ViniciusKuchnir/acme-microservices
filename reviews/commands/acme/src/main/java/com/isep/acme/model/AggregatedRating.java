@@ -3,17 +3,10 @@ package com.isep.acme.model;
 
 import javax.persistence.*;
 
-@Entity
-public class AggregatedRating {
+public abstract class AggregatedRating {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long aggregatedId;
-
-    @Column()
     private double average;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
     private Product product;
 
     protected AggregatedRating() {}

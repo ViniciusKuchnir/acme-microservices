@@ -1,5 +1,6 @@
 package com.isep.acme.messageBroker;
 
+//import com.isep.acme.application.service.ReviewServiceImpl;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -15,7 +16,17 @@ public class RabbitMqConfig {
     
     @Bean
     public Queue queue(){
-        return new Queue("reviews.v1.review-accepted");
+        return new Queue("review_accepted");
+    }
+/*
+    @Bean
+    public ReviewMBListener listener(){
+        return new ReviewMBListener();
+    }
+*/
+    @Bean
+    public ProductListener plistener(){
+        return new ProductListener();
     }
 
     @Bean
