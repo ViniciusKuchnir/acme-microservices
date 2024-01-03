@@ -223,10 +223,15 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewDTO> findPendingReview(){
+    public List<ReviewDTO> findPendingReview() {
 
-        Optional<List<Review>> r = repository.findPendingReviews();
+        Optional<List<Review>> r;
 
+        if (dataSource.equalsIgnoreCase("mongodb")) {
+            r = repositoryMongo.findPendingReviews();
+        } else {
+            r = repository.findPendingReviews();
+        }
         if(r.isEmpty()){
             return null;
         }
@@ -238,7 +243,7 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewDTO moderateReview(Long reviewID, VoteReviewDTO voteReviewDTO) throws ResourceNotFoundException, IllegalArgumentException {
 
         if(dataSource.equalsIgnoreCase("mongodb")){
-            Optional<Review_Mongo> r = repositoryMongo.findById(reviewID);
+            Optional<Review_Mongo> r = repositoryMongo.findByReviewId(reviewID);
 
             if(r.isEmpty()){
                 throw new ResourceNotFoundException("Review not found");
@@ -246,8 +251,8 @@ public class ReviewServiceImpl implements ReviewService {
 
             var lista = r.get().getAcceptance();
 
-            if(voteReviewDTO.getVote().equalsIgnoreCase("accepted")){
-                lista.add(new Vote("accepted",voteReviewDTO.getUserID()));
+            if(voteReviewDTO.getVote().equalsIgnoreCase("approved")){
+                lista.add(new Vote("approved",voteReviewDTO.getUserID()));
                 r.get().setAcceptance(lista);
             }
 
@@ -284,7 +289,7 @@ public class ReviewServiceImpl implements ReviewService {
     public void acceptReview(Long reviewID) throws ResourceNotFoundException, IllegalArgumentException {
 
         if(dataSource.equalsIgnoreCase("mongodb")){
-            Optional<Review_Mongo> r = repositoryMongo.findById(reviewID);
+            Optional<Review_Mongo> r = repositoryMongo.findByReviewId(reviewID);
 
             if(r.isEmpty()){
                 throw new ResourceNotFoundException("Review not found");

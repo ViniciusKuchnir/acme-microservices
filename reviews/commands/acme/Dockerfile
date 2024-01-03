@@ -6,6 +6,6 @@ WORKDIR /app
 
 COPY target/ACME-0.0.1-SNAPSHOT.jar /app/app.jar
 
-EXPOSE 8079
+EXPOSE 8075
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

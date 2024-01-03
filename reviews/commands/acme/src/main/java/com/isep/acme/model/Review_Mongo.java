@@ -62,6 +62,7 @@ public class Review_Mongo extends Review{
         setUser(user);
         this._upVote = new ArrayList<>();
         this._downVote = new ArrayList<>();
+        this._acceptance = new ArrayList<>();
     }
 
     public Long getIdReview() {
@@ -110,6 +111,12 @@ public class Review_Mongo extends Review{
     public void setPublishingDate(LocalDate publishingDate) {
             this._publishingDate = publishingDate;
         }
+
+    @Override
+    public void setCreationDate(LocalDate creationDate) {
+        this._publishingDate = LocalDate.now();
+    }
+
     public List<Vote> getAcceptance() {
             return _acceptance;
         }

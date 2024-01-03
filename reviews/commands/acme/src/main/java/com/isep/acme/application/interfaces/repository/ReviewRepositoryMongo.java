@@ -11,27 +11,27 @@ import java.util.Optional;
 
 public interface ReviewRepositoryMongo extends MongoRepository<Review_Mongo,Long> {
 
-    @Query("{'productId' : ?0}")
+    @Query("{'_productId' : ?0}")
     Optional<List<Review>> findByProductId(Long productId);
 
-    @Query("{'approvalStatus'=pending}")
+    @Query("{'_approvalStatus':'pending'}")
     Optional<List<Review>> findPendingReviews();
 
-    @Query("{'approvalStatus'=active}")
+    @Query("{'_approvalStatus':'active'}")
     Optional<List<Review>> findActiveReviews();
 
-    @Query("{'productId' : ?0 , 'approvalStatus' : ?1}")
+    @Query("{'_productId' : ?0 , '_approvalStatus' : ?1}")
     Optional<List<Review>> findByProductIdStatus(Long productId, String status);
 
-    @Query("{'userId':?0}")
+    @Query("{'_userId':?0}")
     Optional<List<Review>> findByUserId(Long userId);
 
-    @Query("{'idReview':?0}")
-    Optional<Review> findByReviewId(Long reviewId);
+    @Query("{'_idReview':?0}")
+    Optional<Review_Mongo> findByReviewId(Long reviewId);
 
-    @Query("{'upVote.userID': ?0}}")
+    @Query("{'_upVote.userID': ?0}}")
     Optional<List<Review>> findUpVotedReviews(Long userId);
 
-    @Query("{'downVote.userID': ?0}}")
+    @Query("{'_downVote.userID': ?0}}")
     Optional<List<Review>> findDownVotedReviews(Long userId);
 }
