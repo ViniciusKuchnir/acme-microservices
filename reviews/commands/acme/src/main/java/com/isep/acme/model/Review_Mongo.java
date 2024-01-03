@@ -110,6 +110,12 @@ public class Review_Mongo extends Review{
     public void setPublishingDate(LocalDate publishingDate) {
             this._publishingDate = publishingDate;
         }
+
+    @Override
+    public void setCreationDate(LocalDate creationDate) {
+        this._publishingDate = LocalDate.now();
+    }
+
     public List<Vote> getAcceptance() {
             return _acceptance;
         }

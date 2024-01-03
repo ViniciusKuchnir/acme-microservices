@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.isep.acme.application.interfaces.service.ReviewService;
 
+import java.util.List;
+
 
 @Tag(name = "Review", description = "Endpoints for managing Review")
 @RestController
@@ -75,5 +77,32 @@ class ReviewController {
         catch( ResourceNotFoundException e ) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @Operation(summary = "finds a product through its sku and shows its review by status")
+    @GetMapping("/products/{sku}/reviews/{status}")
+    public ResponseEntity<List<ReviewDTO>> findById(@PathVariable(value = "sku") final String sku, @PathVariable(value = "status") final String status) {
+
+        final var review = rService.getReviewsOfProduct(sku, status);
+
+        return ResponseEntity.ok().body( review );
+    }
+
+    @Operation(summary = "gets review by user")
+    @GetMapping("/reviews/{userID}")
+    public ResponseEntity<List<ReviewDTO>> findReviewByUser(@PathVariable(value = "userID") final Long userID) {
+
+        final var review = rService.findReviewsByUser(userID);
+
+        return ResponseEntity.ok().body(review);
+    }
+
+    @Operation(summary = "gets pending reviews")
+    @GetMapping("/reviews/pending")
+    public ResponseEntity<List<ReviewDTO>> getPendingReview(){
+
+        List<ReviewDTO> r = rService.findPendingReview();
+
+        return ResponseEntity.ok().body(r);
     }
 }

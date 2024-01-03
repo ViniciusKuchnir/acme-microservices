@@ -150,16 +150,8 @@ public class Review_SQL extends Review{
         this.publishingDate = publishingDate;
     }
     @Override
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-    @Override
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
-    }
-    @Override
-    public long getVersion() {
-        return version;
     }
     @Override
     public String getFunFact() {

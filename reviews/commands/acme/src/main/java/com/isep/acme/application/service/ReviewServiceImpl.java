@@ -223,10 +223,15 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewDTO> findPendingReview(){
+    public List<ReviewDTO> findPendingReview() {
 
-        Optional<List<Review>> r = repository.findPendingReviews();
+        Optional<List<Review>> r;
 
+        if (dataSource.equalsIgnoreCase("mongodb")) {
+            r = repositoryMongo.findPendingReviews();
+        } else {
+            r = repository.findPendingReviews();
+        }
         if(r.isEmpty()){
             return null;
         }

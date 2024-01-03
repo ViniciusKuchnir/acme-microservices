@@ -1,27 +1,27 @@
 kind: Pod
 apiVersion: v1
 metadata:
-  name: acme-users-64566dc57b-4f98r
-  generateName: acme-users-64566dc57b-
+  name: acme-users-9778dbcbf-82tkw
+  generateName: acme-users-9778dbcbf-
   namespace: default
-  uid: 9bf6cccd-59f4-4131-9b9a-ade4287f6e52
-  resourceVersion: '6776'
-  creationTimestamp: '2023-12-30T20:47:44Z'
+  uid: 417ca016-e4da-483f-b97a-a7134e149142
+  resourceVersion: '23282'
+  creationTimestamp: '2024-01-02T21:55:02Z'
   labels:
     app: acme-users
-    pod-template-hash: 64566dc57b
+    pod-template-hash: 9778dbcbf
   ownerReferences:
     - apiVersion: apps/v1
       kind: ReplicaSet
-      name: acme-users-64566dc57b
-      uid: 2573b9be-60b4-4107-9909-b98285bdf38b
+      name: acme-users-9778dbcbf
+      uid: 4df66102-8ad1-4611-a81b-b7a88f4f46a4
       controller: true
       blockOwnerDeletion: true
   managedFields:
     - manager: kube-controller-manager
       operation: Update
       apiVersion: v1
-      time: '2023-12-30T20:47:44Z'
+      time: '2024-01-02T21:55:02Z'
       fieldsType: FieldsV1
       fieldsV1:
         f:metadata:
@@ -32,7 +32,7 @@ metadata:
             f:pod-template-hash: {}
           f:ownerReferences:
             .: {}
-            k:{"uid":"2573b9be-60b4-4107-9909-b98285bdf38b"}: {}
+            k:{"uid":"4df66102-8ad1-4611-a81b-b7a88f4f46a4"}: {}
         f:spec:
           f:containers:
             k:{"name":"acme-users-6gc8b"}:
@@ -40,7 +40,16 @@ metadata:
               f:image: {}
               f:imagePullPolicy: {}
               f:name: {}
-              f:resources: {}
+              f:resources:
+                .: {}
+                f:limits:
+                  .: {}
+                  f:cpu: {}
+                  f:memory: {}
+                f:requests:
+                  .: {}
+                  f:cpu: {}
+                  f:memory: {}
               f:terminationMessagePath: {}
               f:terminationMessagePolicy: {}
           f:dnsPolicy: {}
@@ -52,7 +61,7 @@ metadata:
     - manager: kubelet
       operation: Update
       apiVersion: v1
-      time: '2023-12-30T20:48:35Z'
+      time: '2024-01-02T21:55:11Z'
       fieldsType: FieldsV1
       fieldsV1:
         f:status:
@@ -81,14 +90,14 @@ metadata:
           f:podIP: {}
           f:podIPs:
             .: {}
-            k:{"ip":"10.244.0.6"}:
+            k:{"ip":"10.244.0.97"}:
               .: {}
               f:ip: {}
           f:startTime: {}
       subresource: status
 spec:
   volumes:
-    - name: kube-api-access-mblwh
+    - name: kube-api-access-hbvm2
       projected:
         sources:
           - serviceAccountToken:
@@ -109,9 +118,15 @@ spec:
   containers:
     - name: acme-users-6gc8b
       image: leandrosousa1190800/acme_users:latest
-      resources: {}
+      resources:
+        limits:
+          cpu: '2'
+          memory: 500Mi
+        requests:
+          cpu: 500m
+          memory: 50Mi
       volumeMounts:
-        - name: kube-api-access-mblwh
+        - name: kube-api-access-hbvm2
           readOnly: true
           mountPath: /var/run/secrets/kubernetes.io/serviceaccount
       terminationMessagePath: /dev/termination-log
@@ -143,29 +158,29 @@ status:
     - type: Initialized
       status: 'True'
       lastProbeTime: null
-      lastTransitionTime: '2023-12-30T20:47:44Z'
+      lastTransitionTime: '2024-01-02T21:55:03Z'
     - type: Ready
       status: 'True'
       lastProbeTime: null
-      lastTransitionTime: '2023-12-30T20:48:35Z'
+      lastTransitionTime: '2024-01-02T21:55:11Z'
     - type: ContainersReady
       status: 'True'
       lastProbeTime: null
-      lastTransitionTime: '2023-12-30T20:48:35Z'
+      lastTransitionTime: '2024-01-02T21:55:11Z'
     - type: PodScheduled
       status: 'True'
       lastProbeTime: null
-      lastTransitionTime: '2023-12-30T20:47:44Z'
+      lastTransitionTime: '2024-01-02T21:55:03Z'
   hostIP: 192.168.49.2
-  podIP: 10.244.0.6
+  podIP: 10.244.0.97
   podIPs:
-    - ip: 10.244.0.6
-  startTime: '2023-12-30T20:47:44Z'
+    - ip: 10.244.0.97
+  startTime: '2024-01-02T21:55:03Z'
   containerStatuses:
     - name: acme-users-6gc8b
       state:
         running:
-          startedAt: '2023-12-30T20:48:35Z'
+          startedAt: '2024-01-02T21:55:10Z'
       lastState: {}
       ready: true
       restartCount: 0
@@ -173,6 +188,6 @@ status:
       imageID: >-
         docker-pullable://leandrosousa1190800/acme_users@sha256:e74ee20bd43a5d7e356eed7346eaedd22f37317da8771305d7342f97a5a6f786
       containerID: >-
-        docker://15956bea01b4a4a9f03954b63665aa37770b5cd938a90c9b2179ebe441b58d18
+        docker://0a43b6fd560b2b74c67b5142076e9982bedc47ecb5c64f63dbc2b21b9bbf12e4
       started: true
-  qosClass: BestEffort
+  qosClass: Burstable

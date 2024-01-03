@@ -4,16 +4,19 @@ metadata:
   name: acme-users
   namespace: default
   uid: d16e2063-86e9-4f95-8da2-15bb11cf6171
-  resourceVersion: '10997'
+  resourceVersion: '23540'
   creationTimestamp: '2023-12-30T21:14:19Z'
   annotations:
     autoscaling.alpha.kubernetes.io/conditions: >-
-      [{"type":"AbleToScale","status":"True","lastTransitionTime":"2023-12-30T22:11:39Z","reason":"SucceededGetScale","message":"the
-      HPA controller was able to get the target's current
-      scale"},{"type":"ScalingActive","status":"False","lastTransitionTime":"2023-12-30T21:14:34Z","reason":"FailedGetResourceMetric","message":"the
-      HPA was unable to compute the replica count: failed to get cpu
-      utilization: missing request for cpu in container acme-users-6gc8b of Pod
-      acme-users-64566dc57b-4f98r"}]
+      [{"type":"AbleToScale","status":"True","lastTransitionTime":"2023-12-31T17:18:00Z","reason":"ScaleDownStabilized","message":"recent
+      recommendations were higher than current one, applying the highest recent
+      recommendation"},{"type":"ScalingActive","status":"True","lastTransitionTime":"2024-01-02T21:54:17Z","reason":"ValidMetricFound","message":"the
+      HPA was able to successfully calculate a replica count from cpu resource
+      utilization (percentage of
+      request)"},{"type":"ScalingLimited","status":"False","lastTransitionTime":"2024-01-02T15:18:43Z","reason":"DesiredWithinRange","message":"the
+      desired count is within the acceptable range"}]
+    autoscaling.alpha.kubernetes.io/current-metrics: >-
+      [{"type":"Resource","resource":{"name":"cpu","currentAverageUtilization":0,"currentAverageValue":"3m"}}]
   managedFields:
     - manager: kubectl-autoscale
       operation: Update
@@ -25,10 +28,18 @@ metadata:
           f:maxReplicas: {}
           f:minReplicas: {}
           f:scaleTargetRef: {}
+    - manager: dashboard
+      operation: Update
+      apiVersion: autoscaling/v1
+      time: '2024-01-01T15:26:13Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:targetCPUUtilizationPercentage: {}
     - manager: kube-controller-manager
       operation: Update
       apiVersion: autoscaling/v2
-      time: '2023-12-30T22:12:21Z'
+      time: '2024-01-02T21:57:32Z'
       fieldsType: FieldsV1
       fieldsV1:
         f:status:
@@ -48,16 +59,18 @@ metadata:
               f:reason: {}
               f:status: {}
               f:type: {}
+            k:{"type":"ScalingLimited"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:currentMetrics: {}
           f:currentReplicas: {}
+          f:desiredReplicas: {}
+          f:lastScaleTime: {}
       subresource: status
-    - manager: dashboard
-      operation: Update
-      apiVersion: autoscaling/v1
-      time: '2023-12-30T22:12:47Z'
-      fieldsType: FieldsV1
-      fieldsV1:
-        f:spec:
-          f:targetCPUUtilizationPercentage: {}
 spec:
   scaleTargetRef:
     kind: Deployment
@@ -65,7 +78,9 @@ spec:
     apiVersion: apps/v1
   minReplicas: 1
   maxReplicas: 10
-  targetCPUUtilizationPercentage: 10
+  targetCPUUtilizationPercentage: 80
 status:
-  currentReplicas: 1
-  desiredReplicas: 0
+  lastScaleTime: '2024-01-02T21:55:02Z'
+  currentReplicas: 3
+  desiredReplicas: 3
+  currentCPUUtilizationPercentage: 0
