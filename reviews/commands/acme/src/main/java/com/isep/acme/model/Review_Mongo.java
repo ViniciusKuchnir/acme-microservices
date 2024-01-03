@@ -62,6 +62,7 @@ public class Review_Mongo extends Review{
         setUser(user);
         this._upVote = new ArrayList<>();
         this._downVote = new ArrayList<>();
+        this._acceptance = new ArrayList<>();
     }
 
     public Long getIdReview() {

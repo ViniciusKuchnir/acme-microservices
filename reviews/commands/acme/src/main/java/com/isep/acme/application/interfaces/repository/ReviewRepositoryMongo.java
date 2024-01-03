@@ -27,7 +27,7 @@ public interface ReviewRepositoryMongo extends MongoRepository<Review_Mongo,Long
     Optional<List<Review>> findByUserId(Long userId);
 
     @Query("{'_idReview':?0}")
-    Optional<Review> findByReviewId(Long reviewId);
+    Optional<Review_Mongo> findByReviewId(Long reviewId);
 
     @Query("{'_upVote.userID': ?0}}")
     Optional<List<Review>> findUpVotedReviews(Long userId);

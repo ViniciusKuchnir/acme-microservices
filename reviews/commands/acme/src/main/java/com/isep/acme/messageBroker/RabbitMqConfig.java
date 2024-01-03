@@ -18,12 +18,12 @@ public class RabbitMqConfig {
     public Queue queue(){
         return new Queue("review_accepted");
     }
-/*
+
     @Bean
     public ReviewMBListener listener(){
         return new ReviewMBListener();
     }
-*/
+
     @Bean
     public ProductListener plistener(){
         return new ProductListener();
